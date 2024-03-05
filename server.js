@@ -24,7 +24,7 @@ app.post("/consultamidas", async (req, res) => {
       waitUntil: "networkidle0",
     });
 
-    // Aceptar la ventana modal
+    // Aceptar la ventana modal esperar
     await page.waitForSelector("ion-button", { timeout: 5000 }).catch(() => {
       throw new Error("Tiempo de espera excedido al buscar botón de modal");
     });
