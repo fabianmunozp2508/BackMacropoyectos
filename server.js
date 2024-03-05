@@ -1,5 +1,5 @@
 const express = require("express");
-const puppeteer = require("puppeteer");
+const puppeteer = require("puppeteer"); // Asegúrate de que esto está instalado
 const cors = require("cors");
 const nodemailer = require('nodemailer');
 const PORT = 3200;
@@ -12,6 +12,7 @@ app.post("/consultamidas", async (req, res) => {
   const { numeroPredial } = req.body;
   let browser = null;
   try {
+    // Lanza una instancia de Chromium en modo headless
     browser = await puppeteer.launch({ headless: true });
     const page = await browser.newPage();
 
@@ -19,20 +20,15 @@ app.post("/consultamidas", async (req, res) => {
     const navigationTimeout = 45000; // 45 segundos
     page.setDefaultNavigationTimeout(navigationTimeout);
 
-    try {
-      await page.goto("https://midas.cartagena.gov.co/", {
-        waitUntil: "networkidle0",
-      });
+    await page.goto("https://midas.cartagena.gov.co/", {
+      waitUntil: "networkidle0",
+    });
 
-      // Aceptar la ventana modal
-      await page.waitForSelector("ion-button", { timeout: 5000 }).catch(() => {
-        throw new Error("Tiempo de espera excedido al buscar botón de modal");
-      });
-      await page.click("ion-button");
-    } catch (error) {
-      console.error("Error al cargar la página o al aceptar la ventana modal:", error);
-      throw new Error("La página no cargó correctamente o el botón modal no se encontró");
-    }
+    // Aceptar la ventana modal
+    await page.waitForSelector("ion-button", { timeout: 5000 }).catch(() => {
+      throw new Error("Tiempo de espera excedido al buscar botón de modal");
+    });
+    await page.click("ion-button");
 
     // Ingresar el número de predial y buscar
     await page.waitForSelector('input[type="search"]', { timeout: 5000 }).catch(() => {
@@ -114,7 +110,6 @@ app.post("/consultamidas", async (req, res) => {
     res.status(500).send("Error en el servidor al hacer scraping: " + error.message);
   }
 });
-
 
 
 // Configura el transporter de nodemailer
