@@ -135,9 +135,70 @@ app.post('/send-email', async (req, res) => {
     from: '"Macroproyectos Cartagena" <info@macroproyectoscartagenadeindias.com>', // dirección del remitente
     to: `macroproyectoscartagena@gmail.com, ${email}`, // lista de destinatarios
     subject: 'Solicitud de información', // Línea de asunto
-    text: `Has recibido un nuevo mensaje de: ${name}\nTeléfono: ${phone}\nEmail: ${email}\n`, // cuerpo del texto plano
-    html:`Has recibido un nuevo mensaje de: ${name}\nTeléfono: ${phone}\nEmail: ${email}\n`,
+    text: `Has recibido un nuevo mensaje de: ${name}\nTeléfono: ${phone}\nEmail: ${email}`, // cuerpo del texto plano
+    html: `
+      <!DOCTYPE html>
+      <html lang="es">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Solicitud de Información</title>
+      </head>
+      <body style="font-family: Arial, sans-serif; color: #333;">
+        <table width="100%" cellpadding="10" style="max-width: 600px; margin: auto; border-collapse: collapse;">
+          <tr style="background-color: #004d99; color: #ffffff;">
+            <td colspan="2" style="text-align: center;">
+              <h1 style="color: #ffffff;">Macroproyectos Cartagena</h1>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2" style="background-color: #f2f2f2; text-align: center;">
+              <h2>Solicitud de Información</h2>
+            </td>
+          </tr>
+          <tr>
+            <td style="background-color: #ffffff; width: 50%;">
+              <strong>Nombre:</strong>
+            </td>
+            <td style="background-color: #ffffff;">
+              ${name}
+            </td>
+          </tr>
+          <tr>
+            <td style="background-color: #e6e6e6;">
+              <strong>Teléfono:</strong>
+            </td>
+            <td style="background-color: #e6e6e6;">
+              ${phone}
+            </td>
+          </tr>
+          <tr>
+            <td style="background-color: #ffffff;">
+              <strong>Email:</strong>
+            </td>
+            <td style="background-color: #ffffff;">
+              ${email}
+            </td>
+          </tr>
+          <tr>
+            <td style="background-color: #e6e6e6;">
+              <strong>Asunto:</strong>
+            </td>
+            <td style="background-color: #e6e6e6;">
+              ${subject}
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2" style="text-align: center; background-color: #004d99; color: #ffffff;">
+              <p>Gracias por contactarnos. Un representante se pondrá en contacto contigo lo antes posible.</p>
+            </td>
+          </tr>
+        </table>
+      </body>
+      </html>
+    `,
   };
+  
 
   try {
     let info = await transporter.sendMail(mailOptions);
