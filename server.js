@@ -13,7 +13,7 @@ app.post("/consultamidas", async (req, res) => {
   let browser = null;
   try {
     // Lanza una instancia de Chromium en modo headless
-    browser = await puppeteer.launch({ headless: true });
+    const browser = await puppeteer.launch({ headless: true });
     const page = await browser.newPage();
 
     // Establece un tiempo de espera personalizado para la navegación
