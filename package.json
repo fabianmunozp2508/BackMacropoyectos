@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "postinstall": "puppeteer install"
+    "postinstall": "node node_modules/puppeteer/install.js"
   },
   "keywords": [],
   "author": "",
